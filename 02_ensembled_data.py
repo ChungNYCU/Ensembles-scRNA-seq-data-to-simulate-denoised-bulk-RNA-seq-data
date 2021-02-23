@@ -5,7 +5,6 @@ Created on Tue Feb 23 19:54:22 2021
 @author: chung
 """
 
-import numpy as np
 import pandas as pd
 import scanpy as sc
 

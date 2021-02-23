@@ -5,15 +5,19 @@ Created on Tue Feb 23 19:17:28 2021
 @author: chung
 """
 
-import numpy as np
-import pandas as pd
 import scanpy as sc
+import os
+
+directory = 'write/'
+
+if not os.path.exists(directory):
+    os.makedirs(directory)
 
 sc.settings.verbosity = 3             # verbosity: errors (0), warnings (1), info (2), hints (3)
 sc.logging.print_header()
 sc.settings.set_figure_params(dpi=80, facecolor='white')
 
-adata = sc.read_csv('temp_data/scRNA_co_gene_filtered.csv', ',', first_column_names=True)
+adata = sc.read_csv('output/scRNA_co_gene_filtered.csv', ',', first_column_names=True)
 adata = adata.T
 adata.var_names_make_unique()
 results_file = 'write/scRNA_co_gene_filtered.h5ad'
@@ -60,6 +64,6 @@ sc.pp.neighbors(adata, n_neighbors=10, n_pcs=40)
 
 sc.tl.umap(adata)
 umap3 = sc.tl.umap(adata, n_components=3, copy=True)
-sc.pl.umap(umap3, color='time',color_map='YlGnBu', save='PCA.svg', components='all')
+sc.pl.umap(umap3, color='time',color_map='YlGnBu', components='all')
 sc.pl.umap(adata, color='time', use_raw=False)
 adata.write(results_file)
