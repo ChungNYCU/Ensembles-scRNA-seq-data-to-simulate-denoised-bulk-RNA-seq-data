@@ -31,7 +31,7 @@ def resample_flow(i):
 
 if __name__ == '__main__':
     file_path = 'write/scRNA_co_gene_filtered.h5ad'
-    origin_scRNA_path = 'GSE141834_scRNAseq_seuratV3_normalized.txt'
+    origin_scRNA_path = 'dataset/GSE141834_scRNAseq_seuratV3_normalized.txt'
 
     adata = sc.read_h5ad(file_path)
     scRNA_df = pd.read_csv(origin_scRNA_path, sep='\t')

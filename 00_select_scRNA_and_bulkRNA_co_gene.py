@@ -7,8 +7,11 @@ Created on Tue Feb 23 17:26:20 2021
 import pandas as pd
 import os
 
-scRNA_df = pd.read_csv('GSE141834_scRNAseq_seuratV3_normalized.txt', sep='\t')
-RNA_df = pd.read_csv('GSE141834_bulkRNAseq_normalized_counts.txt', sep='\t')
+scRNA_filename = 'GSE141834_scRNAseq_seuratV3_normalized.txt'
+bulkRNA_filename = 'GSE141834_bulkRNAseq_normalized_counts.txt'
+
+scRNA_df = pd.read_csv('dataset/' + scRNA_filename, sep='\t')
+RNA_df = pd.read_csv('dataset/' + bulkRNA_filename, sep='\t')
 
 scRNA_gene_name = scRNA_df.index.tolist()
 RNA_gene_name = RNA_df.index.tolist()
