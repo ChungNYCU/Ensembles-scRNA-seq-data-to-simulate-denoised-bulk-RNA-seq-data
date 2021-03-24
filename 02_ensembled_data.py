@@ -30,11 +30,11 @@ def resample_flow(i):
     return simu_bulk
 
 if __name__ == '__main__':
-    file_path = 'write/scRNA_co_gene_filtered.h5ad'
+    file_path = 'write/scRNA_data.h5ad'
     origin_scRNA_path = 'dataset/GSE141834_scRNAseq_seuratV3_normalized.txt'
 
     adata = sc.read_h5ad(file_path)
-    scRNA_df = pd.read_csv(origin_scRNA_path, sep='\t')
+    scRNA_df = pd.read_csv(origin_scRNA_path, sep='\t', index_col=0)
     
     sample_list = list(adata.obs.index)
     gene_list = adata.var.index.tolist()
@@ -45,4 +45,4 @@ if __name__ == '__main__':
         df_simu_bulk['ensembled_Bulk_'+str(i)+'_'+str(sample_list[i][4:6])] = resample_flow(i) 
     
     df_simu_bulk.index = scRNA_df.index.values
-    df_simu_bulk.to_csv('output/ensembled_data.csv')  
+    df_simu_bulk.to_csv('output/ensembled_data.csv')
