@@ -17,10 +17,10 @@ sc.settings.verbosity = 3             # verbosity: errors (0), warnings (1), inf
 sc.logging.print_header()
 sc.settings.set_figure_params(dpi=80, facecolor='white')
 
-adata = sc.read_csv('dataset/GSE141834_scRNAseq_seuratV3_normalized.txt', '\t', first_column_names=True)
+adata = sc.read_csv('output/ensembled_data.csv', ',', first_column_names=True)
 adata = adata.T
 adata.var_names_make_unique()
-results_file = 'write/scRNA_data.h5ad'
+results_file = 'write/ensembled_data.h5ad'
 
 adata.var['mt'] = adata.var_names.str.startswith('MT-')  # annotate the group of mitochondrial genes as 'mt'
 sc.pp.calculate_qc_metrics(adata, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
