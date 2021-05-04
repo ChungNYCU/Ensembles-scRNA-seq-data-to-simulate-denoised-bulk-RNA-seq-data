@@ -81,8 +81,7 @@ def resampling(df, times:'float') -> 'list':
     x[:] = [i * times for i in x]
     return x
 
-def ensembles_data(df, adata, sample:'int', k:'int') -> 'list':
-    knn_list = get_nearest_neighbors(adata, sample, k)
+def ensembles_data(df, knn_list, sample:'int', k:'int') -> 'list':
     p = get_sampling_p(knn_list)
     # ensembled_data = []*20
     ensembled_data = resampling(df.iloc[:, p[0][0]], 0) # 0=self
@@ -94,7 +93,8 @@ def ensembles_df(df, adata, k):
     ensembled_df = pd.DataFrame()
     for i in range(len(df.columns)):
         print(i)
-        ensembled_df[i] = ensembles_data(df, adata, i, k)
+        knn_list = get_nearest_neighbors(adata, i, k)
+        ensembled_df[i] = ensembles_data(df, knn_list, i, k)
     ensembled_df.index = df.index.values
     return ensembled_df
 
