@@ -7,28 +7,16 @@ Created on Tue Feb 23 19:17:28 2021
 
 import scanpy as sc
 import os
+import ensembles as en
 
 directory = 'write/'
 
 if not os.path.exists(directory):
     os.makedirs(directory)
 
-sc.settings.verbosity = 3             # verbosity: errors (0), warnings (1), info (2), hints (3)
-sc.logging.print_header()
-sc.settings.set_figure_params(dpi=80, facecolor='white')
+adata = en.get_adata('dataset/GSE141834_scRNAseq_seuratV3_normalized.txt', '\t')
 
-adata = sc.read_csv('output/ensembled_data.csv', ',', first_column_names=True)
-adata = adata.T
-adata.var_names_make_unique()
-results_file = 'write/ensembled_data.h5ad'
-
-adata.var['mt'] = adata.var_names.str.startswith('MT-')  # annotate the group of mitochondrial genes as 'mt'
-sc.pp.calculate_qc_metrics(adata, qc_vars=['mt'], percent_top=None, log1p=False, inplace=True)
-
-sc.pl.violin(adata, ['n_genes_by_counts', 'total_counts', 'pct_counts_mt'], jitter=0.4, multi_panel=True)
-
-sc.pl.scatter(adata, x='total_counts', y='pct_counts_mt')
-sc.pl.scatter(adata, x='total_counts', y='n_genes_by_counts')
+results_file = 'write/scRNA_origin.h5ad'
 
 time = []
 for i in range(400): 
@@ -43,12 +31,13 @@ for i in range(400):
     time.append('08')
 for i in range(400): 
     time.append('18')
+
 typea = []
 for i in range(2400):
     typea.append('Ensembled')
 
-adata.obs['time']=time
-adata.obs['type']=typea
+en.add_labels(adata, 'time', time)
+en.add_labels(adata, 'type', typea)
 
 sc.pp.normalize_total(adata, target_sum=1e4)
 

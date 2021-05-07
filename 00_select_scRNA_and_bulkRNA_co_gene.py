@@ -6,6 +6,7 @@ Created on Tue Feb 23 17:26:20 2021
 """
 import pandas as pd
 import os
+import ensembles as en
 
 scRNA_filename = 'GSE141834_scRNAseq_seuratV3_normalized.txt'
 bulkRNA_filename = 'GSE141834_bulkRNAseq_normalized_counts.txt'
@@ -13,15 +14,10 @@ bulkRNA_filename = 'GSE141834_bulkRNAseq_normalized_counts.txt'
 scRNA_df = pd.read_csv('dataset/' + scRNA_filename, sep='\t')
 RNA_df = pd.read_csv('dataset/' + bulkRNA_filename, sep='\t')
 
-scRNA_gene_name = scRNA_df.index.tolist()
-RNA_gene_name = RNA_df.index.tolist()
-co_gene_name = list(set(scRNA_gene_name) & set(RNA_gene_name))
+co_gene_name = en.get_common_gene(scRNA_df, RNA_df)
 
-del_scRNA_gene_name=list(set(scRNA_gene_name) - set(co_gene_name))
-del_RNA_gene_name=list(set(RNA_gene_name) - set(co_gene_name))
-
-scRNA_df.drop(del_scRNA_gene_name, inplace=True)
-RNA_df.drop(del_RNA_gene_name, inplace=True)
+RNA_df=RNA_df.loc[co_gene_name]
+scRNA_df=scRNA_df.loc[co_gene_name]
 
 directory = 'output/'
 
