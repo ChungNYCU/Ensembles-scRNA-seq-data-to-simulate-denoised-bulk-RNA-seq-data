@@ -84,11 +84,11 @@ if __name__ == '__main__':
     print('start to ensemble')
     for sample in range(len(sample_list)):
         #str(sample_list[i][4:6]) this string is depend on dataset
-        # print(sample_list[sample])
+        print(sample_list[sample])
         df_simu_bulk['ensembled_Bulk_'+str(sample)+'_'+str(sample_list[sample][4:6])] = resample_flow(sample) 
     
     df_simu_bulk.index = scRNA_df.index.values
-    df_simu_bulk.to_csv('output/ensembled_data_origin_v2_k=4.csv')
+    df_simu_bulk.to_csv('dataset/test.csv')
 
 
 

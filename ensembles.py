@@ -41,8 +41,8 @@ def co_gene(scRNA, BulkRNA) -> 'list':
     Esalier to data visualization and compare single-cell and bulk data.
 
     Keyword arguments:
-    scRNA -- DataFrame of single-cell RNA-seq data, row = genes, columns = samples.
-    BulkRNA -- DataFrame of Bulk RNA-seq data, row = genes, columns = samples.
+    scRNA -- DataFrame of single-cell RNA-seq data, row = gene, column = sample.
+    BulkRNA -- DataFrame of Bulk RNA-seq data, row = gene, column = sample.
     """
     scRNA = scRNA.index.tolist()
     BulkRNA = BulkRNA.index.tolist()
@@ -124,7 +124,7 @@ def ensembles_data(df, knn_list, sample:'int', k:'int') -> 'list':
     """Ensembles a single-cell sample to ensembled sample (sample -> sample).
 
     Keyword arguments:
-    df -- DataFrame of single-cell RNA-seq data, row = genes, columns = samples.
+    df -- DataFrame of single-cell RNA-seq data, row = gene, column = sample.
     knn_list -- List of nearest neighbors.
     sample -- The column index of dataset, correspond a sample.
     k -- Select k nearest neighbors.
@@ -139,7 +139,7 @@ def ensembles_df(df, adata, k):
     """Ensembles single-cell data to ensembled data (DataFrame -> DataFrame).
 
     Keyword arguments:
-    df -- DataFrame of single-cell RNA-seq data, row = genes, columns = samples.
+    df -- DataFrame of single-cell RNA-seq data, row = gene, column = sample.
     adata -- adata is processed by scanpy.
     k -- Select k nearest neighbors.
     """
@@ -156,7 +156,7 @@ def ratio_(df, r):
     Ensembled data * ratio r can be viewed as Bulk RNA-seq data.
 
     Keyword arguments:
-    df -- DataFrame of ensembled data, row = genes, columns = samples.
+    df -- DataFrame of ensembled data, row = gene, column = sample.
     r -- Read count ratio between Bulk RNA-seq and scRNA-seq
     """
     df = df.multiply(r)
