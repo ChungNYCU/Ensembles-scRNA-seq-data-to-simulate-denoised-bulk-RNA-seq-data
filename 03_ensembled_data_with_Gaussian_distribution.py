@@ -5,13 +5,7 @@ Created on Sat Jun  6 21:09:52 2020
 @author: chung
 """
 
-# import numpy as np
-# from sklearn.datasets import load_iris, load_digits
-# from sklearn.model_selection import train_test_split
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 import pandas as pd
-import umap
 import scanpy as sc
 from scipy.stats import norm
 
@@ -22,7 +16,7 @@ def resampling(df, times):
     return x
 
 def resample_flow(sample):
-    k=2
+    k=5
     Nlist = list(adata.obsp['distances'])[sample].toarray().flatten() #neighbor list, sample = sample's number
     temp=[]#near neighbor list
     #select near neighbor
@@ -51,7 +45,7 @@ def resample_flow(sample):
     simu_bulk = resampling(scRNA_df[sample_list[temp[-1][0]]], temp[-1][2]) # 0=self
     for k in range(len(temp)-1):
         simu_bulk = list(map(lambda x,y: x + y, simu_bulk,resampling(scRNA_df[sample_list[temp[k][0]]], temp[k][2])))
-    r = 25
+    r = 50
     simu_bulk = [x*r for x in simu_bulk]
 
     return simu_bulk
@@ -88,7 +82,7 @@ if __name__ == '__main__':
         df_simu_bulk['ensembled_Bulk_'+str(sample)+'_'+str(sample_list[sample][4:6])] = resample_flow(sample) 
     
     df_simu_bulk.index = scRNA_df.index.values
-    df_simu_bulk.to_csv('output/ensembled_data_origin_v2_k=4.csv')
+    df_simu_bulk.to_csv('output/ensembled_data_origin_v2_k.csv')
 
 
 
