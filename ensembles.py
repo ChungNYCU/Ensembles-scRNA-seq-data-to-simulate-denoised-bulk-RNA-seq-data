@@ -151,6 +151,20 @@ def ensembles_df(df, adata, k):
     ensembled_df.index = df.index.values
     return ensembled_df
 
+def get_ratio_r(scRNA, BulkRNA) -> 'float':
+    """Get ratio r from single-cell and Bulk Dataframe.
+
+    Keyword arguments: \n
+    scRNA -- DataFrame of single-cell RNA-seq data, row = genes, columns = samples. \n
+    BulkRNA -- DataFrame of Bulk RNA-seq data, row = genes, columns = samples. \n
+    """
+    scRNA_library_size = sum(scRNA.sum())
+    scRNA_sample_size = len(scRNA.columns)
+    BulkRNA_library_size = sum(BulkRNA.sum())
+    BulkRNA_sample_size = len(BulkRNA.columns)
+    r = (BulkRNA_library_size/BulkRNA_sample_size)/(scRNA_library_size/scRNA_sample_size)
+    return r
+
 def ratio_(df, r):
     """Read count different between single-cell and bulk RNA-seq data, get ratio r through below function.
     r = (Library size (Bulk RNA) / sample size (Bulk RNA)) /  (Library size (scRNA) / sample size (scRNA))
