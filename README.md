@@ -17,7 +17,9 @@ Version: scanpy==1.7.0 anndata==0.7.5 umap==0.5.1 numpy==1.19.2 scipy==1.5.2 pan
 ├── 00_select_scRNA_and_bulkRNA_co_gene.py
 ├── 01_data_preprocess.py
 ├── 02_ensembled_data.py
+├── 03_ensembled_data_with_Gaussian_distribution.py
 ├── README.md
+├── ensembles.py
 └── dataset
     ├── GSE141834_bulkRNAseq_normalized_counts.txt
     └── GSE141834_scRNAseq_seuratV3_normalized.txt
